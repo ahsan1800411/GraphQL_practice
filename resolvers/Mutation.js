@@ -1,3 +1,5 @@
+const { v4: uuidv4 } = require('uuid');
+
 exports.Mutation = {
   createProduct: (parent, { input }, { db }, info) => {
     const { name, price, description, image } = input;
@@ -22,5 +24,15 @@ exports.Mutation = {
       ...input,
     };
     return db.products[index];
+  },
+  createUser: (parent, { input }, { db }) => {
+    const { name, isPresent } = input;
+    const newUser = {
+      id: uuidv4(),
+      name,
+      isPresent,
+    };
+    db.users.push(newUser);
+    return newUser;
   },
 };
